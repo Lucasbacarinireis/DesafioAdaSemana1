@@ -8,6 +8,6 @@ public class CustomerFeedback {
         this.id = id;
         this.type = type;
         this.message = message;
-        this.status = FeedbackStatus.RECEBIDO; ]
+        this.status = FeedbackStatus.RECEBIDO;
     }
 }
