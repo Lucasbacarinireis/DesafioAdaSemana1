@@ -1,13 +1,14 @@
-# DesafioAdaSemana1
-DesafioAdaSemana1
+# Desafio 1° semana | Ada Tehch + Cielo
 
-Desafio
+
+### Descrição <br>
 Você foi designado para criar um serviço que gerencia filas de sugestões, elogios e críticas de
 clientes para uma empresa, aproveitando os serviços da AWS, como SNS e SQS. O serviço deve
 permitir que os clientes enviem suas sugestões, elogios e críticas, que serão enfileirados e
 processados de acordo com a ordem em que foram recebidos. Além disso, deve ser possível
 verificar o status da fila e obter informações sobre as mensagens recebidas.
-Requisitos:
+
+#### Requisitos:
   1. Implemente uma classe CustomerFeedback que represente uma mensagem de
 feedback com os seguintes atributos: id, type (tipo de feedback, como "Sugestão",
 "Elogio" ou "Crítica"), message (mensagem do cliente) e status (status da mensagem,
@@ -31,9 +32,65 @@ Crítica).
   6. Documente a API REST usando a especificação Swagger ou alguma outra ferramenta
 de documentação de API.
 
+## 🤝 Colaboradores
+**Grupo:: Sala 4**<br>
+<table>
+  <tr>
+    <td align="center">
+      <a href="https://github.com/andersonaoliveira">
+        <img src="https://avatars.githubusercontent.com/u/90530503?v=4" width="100px;" alt="Foto do Anderson de Aguiar de Oliveira no GitHub"/><br>        
+        <sub>
+          <b>Anderson de Aguiar de Oliveira</b>
+        </sub>
+      </a>
+    </td>
+    <td align="center">
+      <a href="https://github.com/Lucasbacarinireis">
+        <img src="https://avatars.githubusercontent.com/u/100075142?v=4" width="100px;" alt="Foto do Lucas Bacarini Reis no GitHub"/><br>
+        <sub>
+          <b>Lucas Bacarini Reis</b>
+        </sub>
+      </a>
+    </td>
+    <td align="center">
+      <a href="https://github.com/JardielmaQueiroz">
+        <img src="https://avatars.githubusercontent.com/u/18507854?v=4" width="100px;" alt="Foto da Jardielma Lima no GitHub"/><br>
+        <sub>
+          <b>Jardielma Queiroz De Lima Lopes </b>
+        </sub>
+      </a>
+    </td>
+  </tr>
+</table>
 
-# Ferramentas Utilizadas
+## 💻 Pré-requisitos
 
-- [Java JDK 17](https://www.oracle.com/java/technologies/javase/jdk17-archive-downloads.html)
+Antes de começar, verifique se você atendeu aos seguintes requisitos:
 
-- [Swagger](https://editor.swagger.io/)
+- [Java JDK 17](https://www.oracle.com/java/technologies/javase/jdk17-archive-downloads.html): Necessário para executar o projeto Java
+- [Spring Boot](https://spring.io/)
+- [Maven](https://maven.apache.org/): Necessário para realizar o build do projeto Java
+- [Swagger](https://editor.swagger.io/): 
+  
+## Ferramentas Utilizadas
+
+- [IntelliJ | JetBrains](https://www.jetbrains.com/pt-br/idea/)
+
+## 🚀 Getting started 
+
+Para instalar o <nome_do_projeto>, siga estas etapas:
+
+```
+<comando_de_instalação>
+```
+
+ ## 📫 Contribuindo para projeto
+
+Para contribuir com o projeto, siga estas etapas:
+
+- Bifurque este repositório.
+- Crie um branch: `git checkout -b <nome_branch>`.
+- Faça suas alterações e confirme-as: `git commit -m '<mensagem_commit>'`
+- Envie para o branch original: `git push origin <nome_do_projeto> / <local>`
+- Crie a solicitação de pull.
+
