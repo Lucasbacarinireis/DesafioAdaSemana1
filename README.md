@@ -30,3 +30,10 @@ Crítica).
     c. Obter informações sobre todos os feedbacks na fila de cada tipo.
   6. Documente a API REST usando a especificação Swagger ou alguma outra ferramenta
 de documentação de API.
+
+
+# Ferramentas Utilizadas
+
+- [Java JDK 17](https://www.oracle.com/java/technologies/javase/jdk17-archive-downloads.html)
+
+- [Swagger](https://editor.swagger.io/)
