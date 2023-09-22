@@ -1,0 +1,9 @@
+-------------------------------------------------------------------------------
+Test set: com.cielo.desafio01.Desafio01ApplicationTests
+-------------------------------------------------------------------------------
+Tests run: 1, Failures: 0, Errors: 1, Skipped: 0, Time elapsed: 1.074 s <<< FAILURE! - in com.cielo.desafio01.Desafio01ApplicationTests
+contextLoads  Time elapsed: 0.001 s  <<< ERROR!
+java.lang.IllegalStateException: Failed to load ApplicationContext for [WebMergedContextConfiguration@38830ea testClass = com.cielo.desafio01.Desafio01ApplicationTests, locations = [], classes = [com.cielo.desafio01.Desafio01Application], contextInitializerClasses = [], activeProfiles = [], propertySourceLocations = [], propertySourceProperties = ["org.springframework.boot.test.context.SpringBootTestContextBootstrapper=true"], contextCustomizers = [org.springframework.boot.test.context.filter.ExcludeFilterContextCustomizer@3e2059ae, org.springframework.boot.test.json.DuplicateJsonObjectContextCustomizerFactory$DuplicateJsonObjectContextCustomizer@4fbe37eb, org.springframework.boot.test.mock.mockito.MockitoContextCustomizer@0, org.springframework.boot.test.web.client.TestRestTemplateContextCustomizer@b83a9be, org.springframework.boot.test.autoconfigure.actuate.observability.ObservabilityContextCustomizerFactory$DisableObservabilityContextCustomizer@9da1, org.springframework.boot.test.autoconfigure.properties.PropertyMappingContextCustomizer@0, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverContextCustomizerFactory$Customizer@4eaf3684, org.springframework.boot.test.context.SpringBootTestAnnotation@1b7d210c], resourceBasePath = "src/main/webapp", contextLoader = org.springframework.boot.test.context.SpringBootContextLoader, parent = null]
+Caused by: java.lang.TypeNotPresentException: Type javax.servlet.http.HttpServletRequest not present
+Caused by: java.lang.ClassNotFoundException: javax.servlet.http.HttpServletRequest
+
