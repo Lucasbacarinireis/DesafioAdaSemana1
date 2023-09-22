@@ -1,6 +1,6 @@
 {
-  "name": "uko-react",
-  "version": "0.1.0",
+  "name": "feedback-react-app",
+  "version": "0.0.0",
   "private": true,
   "type": "module",
   "dependencies": {
