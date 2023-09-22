@@ -1,8 +1,8 @@
 package com.cielo.desafio01.controller;
 
+import com.amazonaws.AmazonServiceException;
 import com.amazonaws.services.sqs.AmazonSQS;
 import com.amazonaws.services.sqs.model.*;
-
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -20,7 +20,7 @@ import com.cielo.desafio01.model.CustomerFeedback;
 
 @RestController
 @RequestMapping("/feedbacks")
-public class FeedbackController {
+public class FeedbackControllerGet {
 
     private AmazonSQS amazonSQS;
     private final String sqsSuggestionQueueUrl;
@@ -29,7 +29,7 @@ public class FeedbackController {
 
 
     @Autowired
-    public FeedbackController(
+    public FeedbackControllerGet(
             AmazonSQS amazonSQS,
             @Value("${sqs.suggestion.queue.url}") String sqsSuggestionQueueUrl,
             @Value("${sqs.compliment.queue.url}") String sqsComplimentQueueUrl,
@@ -39,31 +39,7 @@ public class FeedbackController {
         this.sqsSuggestionQueueUrl = sqsSuggestionQueueUrl;
         this.sqsComplimentQueueUrl = sqsComplimentQueueUrl;
         this.sqsCriticismQueueUrl = sqsCriticismQueueUrl;
-    }
-
-    @PostMapping
-    public ResponseEntity<String> enviarFeedback(@RequestBody CustomerFeedback feedback) {
-        FeedbackType tipoFeedback = feedback.getType();
-        String filaSQS = obterFilaSQSPorTipo(tipoFeedback);
-
-        feedback.setStatus(FeedbackStatus.RECEBIDO);
-
-        String messageGroupId = determinarMessageGroupId(feedback);
-
-        SendMessageRequest request = new SendMessageRequest()
-                .withQueueUrl(filaSQS)
-                .withMessageBody(feedback.getMessage())
-                .withMessageGroupId(messageGroupId)
-                .withMessageDeduplicationId("mensagem-unica");
-
-        SendMessageResult result = amazonSQS.sendMessage(request);
-
-        return ResponseEntity.status(HttpStatus.CREATED).body("Feedback enviado com sucesso.");
-    }
-
-    private String determinarMessageGroupId(CustomerFeedback feedback) {
-        return feedback.getType().toString();
-    }
+    }    
 
     @GetMapping("/tamanho-fila/{tipo}")
     public ResponseEntity<Integer> obterTamanhoFilaPorTipo(@PathVariable FeedbackType tipo) {
@@ -111,7 +87,7 @@ public class FeedbackController {
 
         ReceiveMessageRequest request = new ReceiveMessageRequest()
                 .withQueueUrl(filaSQS)
-                .withMaxNumberOfMessages(10);
+                .withMaxNumberOfMessages(100);
 
         ReceiveMessageResult response = amazonSQS.receiveMessage(request);
 
@@ -141,8 +117,6 @@ public class FeedbackController {
                 feedback.setType(FeedbackType.CRITICA);
             } else if (mensagem.contains("ELOGIO")) {
                 feedback.setType(FeedbackType.ELOGIO);
-            } else if (mensagem.contains("SUGESTAO")) {
-                feedback.setType(FeedbackType.SUGESTAO);
             } else {
                 feedback.setType(FeedbackType.SUGESTAO);
             }
