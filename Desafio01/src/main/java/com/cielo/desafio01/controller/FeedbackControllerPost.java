@@ -1,5 +1,10 @@
 package com.cielo.desafio01.controller;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -35,6 +40,14 @@ public class FeedbackControllerPost {
     @Value("${sns.criticism.topic.arn}")
     private String criticismTopicArn;
 
+    @Operation(
+            summary = "Envia um feedback para a fila"
+//            description = "Envia um feedback para a fila.",
+    )
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", content = { @Content(schema = @Schema(implementation = CustomerFeedback.class), mediaType = "application/json") }),
+            @ApiResponse(responseCode = "404", content = { @Content(schema = @Schema()) }),
+            @ApiResponse(responseCode = "500", content = { @Content(schema = @Schema()) }) })
     @PostMapping("/enviar-feedback")
     public ResponseEntity<String> enviarFeedback(@RequestBody CustomerFeedback feedback) {
         FeedbackType tipoFeedback = feedback.getType();

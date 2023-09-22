@@ -4,6 +4,12 @@ import com.amazonaws.AmazonServiceException;
 import com.amazonaws.services.sqs.AmazonSQS;
 import com.amazonaws.services.sqs.model.*;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
@@ -18,6 +24,7 @@ import com.cielo.desafio01.enums.FeedbackType;
 import com.cielo.desafio01.enums.FeedbackStatus;
 import com.cielo.desafio01.model.CustomerFeedback;
 
+@Tag(name = "Feedback", description = "API de Gerenciamento de feedbacks")
 @RestController
 @RequestMapping("/feedbacks")
 public class FeedbackControllerGet {
@@ -39,8 +46,16 @@ public class FeedbackControllerGet {
         this.sqsSuggestionQueueUrl = sqsSuggestionQueueUrl;
         this.sqsComplimentQueueUrl = sqsComplimentQueueUrl;
         this.sqsCriticismQueueUrl = sqsCriticismQueueUrl;
-    }    
+    }
 
+    @Operation(
+            summary = "Busca o tamanho da fila pelo tipo"
+//            description = "Envia um feedback para a fila.",
+    )
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", content = { @Content(schema = @Schema(implementation = CustomerFeedback.class), mediaType = "application/json") }),
+            @ApiResponse(responseCode = "404", content = { @Content(schema = @Schema()) }),
+            @ApiResponse(responseCode = "500", content = { @Content(schema = @Schema()) }) })
     @GetMapping("/tamanho-fila/{tipo}")
     public ResponseEntity<Integer> obterTamanhoFilaPorTipo(@PathVariable FeedbackType tipo) {
         String filaSQS = obterFilaSQSPorTipo(tipo);
@@ -49,6 +64,14 @@ public class FeedbackControllerGet {
         return ResponseEntity.ok(tamanhoFila);
     }
 
+    @Operation(
+            summary = "Busca o tamanho da fila pelo tipo"
+//            description = "Envia um feedback para a fila.",
+    )
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", content = { @Content(schema = @Schema(implementation = CustomerFeedback.class), mediaType = "application/json") }),
+            @ApiResponse(responseCode = "404", content = { @Content(schema = @Schema()) }),
+            @ApiResponse(responseCode = "500", content = { @Content(schema = @Schema()) }) })
     @GetMapping("/todos/{tipo}")
     public ResponseEntity<List<CustomerFeedback>> obterTodosFeedbacksPorTipo(@PathVariable FeedbackType tipo) {
         List<CustomerFeedback> feedbacks = consultarFeedbacksNoSQS(tipo);
