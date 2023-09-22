@@ -87,7 +87,7 @@ public class FeedbackControllerGet {
 
         ReceiveMessageRequest request = new ReceiveMessageRequest()
                 .withQueueUrl(filaSQS)
-                .withMaxNumberOfMessages(100);
+                .withMaxNumberOfMessages(10);
 
         ReceiveMessageResult response = amazonSQS.receiveMessage(request);
 
