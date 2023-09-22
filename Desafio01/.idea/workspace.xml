@@ -12,7 +12,8 @@
       <change afterPath="$PROJECT_DIR$/mvnw.cmd" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/src/main/java/com/cielo/desafio01/Desafio01Application.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/cielo/desafio01/controller/FeedbackController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/cielo/desafio01/controller/FeedbackControllerGet.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/cielo/desafio01/controller/FeedbackControllerPost.java" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/src/main/java/com/cielo/desafio01/enums/FeedbackStatus.java" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/src/main/java/com/cielo/desafio01/enums/FeedbackType.java" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/src/main/java/com/cielo/desafio01/model/CustomerFeedback.java" afterDir="false" />
