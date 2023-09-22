@@ -1,0 +1,14 @@
+com\cielo\desafio01\service\SNSService.class
+com\cielo\desafio01\controller\FeedbackControllerPost.class
+com\cielo\desafio01\service\FeedbackQueueConsumer.class
+com\cielo\desafio01\controller\FeedbackControllerGet.class
+com\cielo\desafio01\enums\FeedbackType.class
+com\cielo\desafio01\config\AwsSNSConfig.class
+com\cielo\desafio01\util\EnvironmentVariable.class
+com\cielo\desafio01\config\AwsSQSConfig.class
+com\cielo\desafio01\controller\FeedbackControllerPost$1.class
+com\cielo\desafio01\service\FeedbackService.class
+com\cielo\desafio01\controller\FeedbackControllerGet$1.class
+com\cielo\desafio01\enums\FeedbackStatus.class
+com\cielo\desafio01\Desafio01Application.class
+com\cielo\desafio01\model\CustomerFeedback.class
