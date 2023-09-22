@@ -4,6 +4,12 @@ import com.amazonaws.services.sqs.AmazonSQS;
 import com.amazonaws.services.sqs.model.*;
 
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
@@ -15,11 +21,13 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 import com.cielo.desafio01.enums.FeedbackType;
-import com.cielo.desafio01.enums.FeedbackStatus;
 import com.cielo.desafio01.model.CustomerFeedback;
 
+@Tag(name = "Feedback", description = "API de Gerenciamento de feedbacks")
 @RestController
-@RequestMapping("/feedbacks")
+@RequestMapping( value = "/feedbacks")
+//@Api(value= "API REST Feedbacks")
+//@CrossOrigin(origins = "*")
 public class FeedbackController {
 
     private AmazonSQS amazonSQS;
@@ -41,12 +49,19 @@ public class FeedbackController {
         this.sqsCriticismQueueUrl = sqsCriticismQueueUrl;
     }
 
+
+    @Operation(
+            summary = "Envia um feedback para a fila"
+//            description = "Envia um feedback para a fila.",
+            )
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", content = { @Content(schema = @Schema(implementation = CustomerFeedback.class), mediaType = "application/json") }),
+            @ApiResponse(responseCode = "404", content = { @Content(schema = @Schema()) }),
+            @ApiResponse(responseCode = "500", content = { @Content(schema = @Schema()) }) })
     @PostMapping
     public ResponseEntity<String> enviarFeedback(@RequestBody CustomerFeedback feedback) {
         FeedbackType tipoFeedback = feedback.getType();
         String filaSQS = obterFilaSQSPorTipo(tipoFeedback);
-
-        feedback.setStatus(FeedbackStatus.RECEBIDO);
 
         String messageGroupId = determinarMessageGroupId(feedback);
 
@@ -65,6 +80,14 @@ public class FeedbackController {
         return feedback.getType().toString();
     }
 
+    @Operation(
+            summary = "Busca o tamanho da fila pelo tipo"
+//            description = "Envia um feedback para a fila.",
+    )
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", content = { @Content(schema = @Schema(implementation = CustomerFeedback.class), mediaType = "application/json") }),
+            @ApiResponse(responseCode = "404", content = { @Content(schema = @Schema()) }),
+            @ApiResponse(responseCode = "500", content = { @Content(schema = @Schema()) }) })
     @GetMapping("/tamanho-fila/{tipo}")
     public ResponseEntity<Integer> obterTamanhoFilaPorTipo(@PathVariable FeedbackType tipo) {
         String filaSQS = obterFilaSQSPorTipo(tipo);
@@ -73,6 +96,14 @@ public class FeedbackController {
         return ResponseEntity.ok(tamanhoFila);
     }
 
+    @Operation(
+            summary = "Busca todos os feedbacks"
+//            description = "Envia um feedback para a fila.",
+    )
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", content = { @Content(schema = @Schema(implementation = CustomerFeedback.class), mediaType = "application/json") }),
+            @ApiResponse(responseCode = "404", content = { @Content(schema = @Schema()) }),
+            @ApiResponse(responseCode = "500", content = { @Content(schema = @Schema()) }) })
     @GetMapping("/todos/{tipo}")
     public ResponseEntity<List<CustomerFeedback>> obterTodosFeedbacksPorTipo(@PathVariable FeedbackType tipo) {
         List<CustomerFeedback> feedbacks = consultarFeedbacksNoSQS(tipo);
@@ -127,26 +158,8 @@ public class FeedbackController {
     private CustomerFeedback converterMensagemParaFeedback(Message message) {
         CustomerFeedback feedback = new CustomerFeedback();
         feedback.setId(message.getMessageId());
-        feedback.setStatus(FeedbackStatus.RECEBIDO);
+        feedback.setType(FeedbackType.valueOf(message.getMessageAttributes().get("Type").getStringValue()));
         feedback.setMessage(message.getBody());
-
-        MessageAttributeValue typeAttribute = message.getMessageAttributes().get("Type");
-
-        if (typeAttribute != null) {
-            feedback.setType(FeedbackType.valueOf(typeAttribute.getStringValue()));
-        } else {
-            String mensagem = message.getBody().toUpperCase();
-
-            if (mensagem.contains("CRITICA")) {
-                feedback.setType(FeedbackType.CRITICA);
-            } else if (mensagem.contains("ELOGIO")) {
-                feedback.setType(FeedbackType.ELOGIO);
-            } else if (mensagem.contains("SUGESTAO")) {
-                feedback.setType(FeedbackType.SUGESTAO);
-            } else {
-                feedback.setType(FeedbackType.SUGESTAO);
-            }
-        }
 
         return feedback;
     }
