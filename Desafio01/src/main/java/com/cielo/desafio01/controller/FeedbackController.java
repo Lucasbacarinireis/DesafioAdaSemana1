@@ -1,14 +1,8 @@
 package com.cielo.desafio01.controller;
 
 import com.amazonaws.services.sqs.AmazonSQS;
-import com.amazonaws.services.sqs.model.SendMessageRequest;
-import com.amazonaws.services.sqs.model.SendMessageResult;
-import com.amazonaws.services.sqs.model.GetQueueAttributesRequest;
-import com.amazonaws.services.sqs.model.GetQueueAttributesResponse;
-import com.amazonaws.services.sqs.model.QueueAttributeName;
-import com.amazonaws.services.sqs.model.ReceiveMessageRequest;
-import com.amazonaws.services.sqs.model.ReceiveMessageResponse;
-import com.amazonaws.services.sqs.model.Message;
+import com.amazonaws.services.sqs.model.*;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -18,20 +12,21 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
 import java.util.stream.Collectors;
 
 import com.cielo.desafio01.enums.FeedbackType;
+import com.cielo.desafio01.enums.FeedbackStatus;
 import com.cielo.desafio01.model.CustomerFeedback;
 
 @RestController
 @RequestMapping("/feedbacks")
 public class FeedbackController {
 
-    private final AmazonSQS amazonSQS;
+    private AmazonSQS amazonSQS;
     private final String sqsSuggestionQueueUrl;
     private final String sqsComplimentQueueUrl;
     private final String sqsCriticismQueueUrl;
+
 
     @Autowired
     public FeedbackController(
@@ -51,13 +46,23 @@ public class FeedbackController {
         FeedbackType tipoFeedback = feedback.getType();
         String filaSQS = obterFilaSQSPorTipo(tipoFeedback);
 
+        feedback.setStatus(FeedbackStatus.RECEBIDO);
+
+        String messageGroupId = determinarMessageGroupId(feedback);
+
         SendMessageRequest request = new SendMessageRequest()
                 .withQueueUrl(filaSQS)
-                .withMessageBody(feedback.getMessage());
+                .withMessageBody(feedback.getMessage())
+                .withMessageGroupId(messageGroupId)
+                .withMessageDeduplicationId("mensagem-unica");
 
         SendMessageResult result = amazonSQS.sendMessage(request);
 
         return ResponseEntity.status(HttpStatus.CREATED).body("Feedback enviado com sucesso.");
+    }
+
+    private String determinarMessageGroupId(CustomerFeedback feedback) {
+        return feedback.getType().toString();
     }
 
     @GetMapping("/tamanho-fila/{tipo}")
@@ -93,8 +98,8 @@ public class FeedbackController {
                 .withQueueUrl(filaSQS)
                 .withAttributeNames(QueueAttributeName.ApproximateNumberOfMessages);
 
-        GetQueueAttributesResponse response = amazonSQS.getQueueAttributes(request);
-        Map<String, String> attributes = response.attributes();
+        GetQueueAttributesResult response = amazonSQS.getQueueAttributes(request);
+        Map<String, String> attributes = response.getAttributes();
 
         String tamanhoAproximado = attributes.get(QueueAttributeName.ApproximateNumberOfMessages.toString());
 
@@ -108,9 +113,9 @@ public class FeedbackController {
                 .withQueueUrl(filaSQS)
                 .withMaxNumberOfMessages(10);
 
-        ReceiveMessageResponse response = amazonSQS.receiveMessage(request);
+        ReceiveMessageResult response = amazonSQS.receiveMessage(request);
 
-        List<Message> messages = response.messages();
+        List<Message> messages = response.getMessages();
 
         List<CustomerFeedback> feedbacks = messages.stream()
                 .map(this::converterMensagemParaFeedback)
@@ -121,9 +126,27 @@ public class FeedbackController {
 
     private CustomerFeedback converterMensagemParaFeedback(Message message) {
         CustomerFeedback feedback = new CustomerFeedback();
-        feedback.setId(message.messageId());
-        feedback.setType(FeedbackType.valueOf(message.messageAttributes().get("Type").stringValue()));
-        feedback.setMessage(message.body());
+        feedback.setId(message.getMessageId());
+        feedback.setStatus(FeedbackStatus.RECEBIDO);
+        feedback.setMessage(message.getBody());
+
+        MessageAttributeValue typeAttribute = message.getMessageAttributes().get("Type");
+
+        if (typeAttribute != null) {
+            feedback.setType(FeedbackType.valueOf(typeAttribute.getStringValue()));
+        } else {
+            String mensagem = message.getBody().toUpperCase();
+
+            if (mensagem.contains("CRITICA")) {
+                feedback.setType(FeedbackType.CRITICA);
+            } else if (mensagem.contains("ELOGIO")) {
+                feedback.setType(FeedbackType.ELOGIO);
+            } else if (mensagem.contains("SUGESTAO")) {
+                feedback.setType(FeedbackType.SUGESTAO);
+            } else {
+                feedback.setType(FeedbackType.SUGESTAO);
+            }
+        }
 
         return feedback;
     }
