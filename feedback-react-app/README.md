@@ -1,8 +1,29 @@
-# React + Vite
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Getting Started
 
-Currently, two official plugins are available:
+Create a React project from template
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Clone the project to your machine
+```
+git clone https://github.com/Lucasbacarinireis/DesafioAdaSemana1
+```
+
+Navigate to the project folder
+```
+cd feedback-react-app
+```
+
+Run the setup
+```
+yarn install
+```
+
+And start the development server
+```
+yarn start
+```
+
+Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+
+
+
