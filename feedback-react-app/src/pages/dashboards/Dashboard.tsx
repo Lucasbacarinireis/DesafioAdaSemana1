@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, useEffect, useState } from "react";
 
 import { Box, Grid, useTheme } from "@mui/material";
 
@@ -9,31 +9,39 @@ import Analytics from "components/Dashboards/Analytics";
 import DashboardCard from "components/Dashboards/Card";
 import RecentOrders from "components/Dashboards/RecentOrders";
 
+import api from 'service/Api';
+import toast from "react-hot-toast";
+
 const Dashboard: FC = () => {
   useTitle("Dashboard");
 
   const theme = useTheme();
 
-  const cardList = [
-    {
-      total: 2,
-      Icon: EarningIcon,
-      title: "Sugestões",
-      color: theme.palette.primary.main,
-    },
-    {
-      total: 1,
-      title: "Elogios",
-      Icon: EarningIcon,
-      color: theme.palette.primary.green,
-    },
-    {
-      total: 1,
-      Icon: EarningIcon,
-      title: "Críticas",
-      color: theme.palette.primary.red,
-    },
-  ];
+  const types = [{type:'ELOGIO', title:'Elogio', total:0,  Icon: EarningIcon, color:theme.palette.primary.green},
+  {type:'SUGESTAO', title:'Sugestão',total:0,  Icon: EarningIcon, color:theme.palette.primary.main},
+   {type:'CRITICA',title:'Crítica',total:0,  Icon: EarningIcon, color:theme.palette.primary.red}]
+  
+   const [cardList, setCardList] = useState<unknown[]>([]);
+
+  useEffect(() => {
+    const loadCardList = async () => {
+        for (const type of types) {
+          try {
+            let query = `/feedbacks/tamanho-fila/${type.type}`
+            const response = await api.get(query);
+            type.total = Number(response.data);
+          } catch (error) {
+            toast.error(`${error}`);
+          }
+      }
+      setCardList(types)
+    };
+
+    
+    loadCardList();
+  }, []);
+
+
 
   return (
     <Box pt={2} pb={4}>
