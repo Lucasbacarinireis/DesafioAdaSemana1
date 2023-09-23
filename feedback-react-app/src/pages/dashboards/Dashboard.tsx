@@ -12,29 +12,40 @@ import RecentOrders from "components/Dashboards/RecentOrders";
 import api from 'service/Api';
 import toast from "react-hot-toast";
 
+
+
 const Dashboard: FC = () => {
   useTitle("Dashboard");
 
   const theme = useTheme();
 
-  const types = [{type:'ELOGIO', title:'Elogio', total:0,  Icon: EarningIcon, color:theme.palette.primary.green},
-  {type:'SUGESTAO', title:'Sugestão',total:0,  Icon: EarningIcon, color:theme.palette.primary.main},
-   {type:'CRITICA',title:'Crítica',total:0,  Icon: EarningIcon, color:theme.palette.primary.red}]
+  const types = [
+    { type: 'ELOGIO', title: 'Elogio', Icon: EarningIcon, color: theme.palette.primary.green },
+    { type: 'SUGESTAO', title: 'Sugestão', Icon: EarningIcon, color: theme.palette.primary.main },
+    { type: 'CRITICA', title: 'Crítica', Icon: EarningIcon, color: theme.palette.primary.red }
+  ];
   
    const [cardList, setCardList] = useState<unknown[]>([]);
 
   useEffect(() => {
     const loadCardList = async () => {
-        for (const type of types) {
-          try {
-            let query = `/feedbacks/tamanho-fila/${type.type}`
-            const response = await api.get(query);
-            type.total = Number(response.data);
-          } catch (error) {
-            toast.error(`${error}`);
-          }
-      }
-      setCardList(types)
+      const updatedTypes = await Promise.all(types.map(async (type) => {
+        
+        const query = `/feedbacks/tamanho-fila/${type.type}`;
+
+        try {
+          const response = await api.get(query);
+          const total = Number(response.data);
+          return { ...type, total };
+        } catch (error) {
+          toast.error(`Erro ao carregar feedbacks de ${type.type}`);
+          console.error(error);
+          return type;
+        }
+
+      }));
+      
+      setCardList(updatedTypes)
     };
   
     loadCardList();
