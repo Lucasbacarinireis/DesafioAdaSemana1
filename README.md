@@ -98,4 +98,20 @@ Para contribuir com o projeto, siga estas etapas:
 - Envie para o branch original: `git push origin <nome_do_projeto> / <local>`
 - Crie a solicitação de pull.
 
-## 
+## ✨ Preview
+
+  #### 1. Home
+  ![1. Home](<Imagens/1. home.png>)
+
+
+  #### 2. Home - Perfil
+  ![2. Home](<Imagens/1. home.png>)
+
+  #### 3. Formulário de envio de feedbacks
+  ![3.](<Imagens/1.1 form cadastro.png>)
+
+  #### 4. Login
+  ![4.](<Imagens/1.1 form cadastro.png>)
+
+  #### 5. Primieiro acesso
+  ![5.](<Imagens/4. cadastrar usuário.png>)
