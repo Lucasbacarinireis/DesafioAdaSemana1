@@ -68,21 +68,25 @@ de documentação de API.
 Antes de começar, verifique se você atendeu aos seguintes requisitos:
 
 - [Java JDK 17](https://www.oracle.com/java/technologies/javase/jdk17-archive-downloads.html): Necessário para executar o projeto Java
-- [Spring Boot](https://spring.io/)
-- [Maven](https://maven.apache.org/): Necessário para realizar o build do projeto Java
-- [Swagger](https://editor.swagger.io/): 
+- [nodejs](https://nodejs.org/pt-br/download)
+- [yarn](https://classic.yarnpkg.com/lang/en/docs/install/#windows-stable)
   
 ## Ferramentas Utilizadas
 
-- [IntelliJ | JetBrains](https://www.jetbrains.com/pt-br/idea/)
+- [Spring Boot](https://spring.io/)
+- [Maven](https://maven.apache.org/): Necessário para realizar o build do projeto Java
+- [Swagger](https://editor.swagger.io/):
+- [react + Material ui](https://react.dev/) 
 
 ## 🚀 Getting started 
 
-Para instalar o <nome_do_projeto>, siga estas etapas:
-
-```
-<comando_de_instalação>
-```
+1. **Front End:**
+   - Siga as instruções contidas no [README.md](https://github.com/Lucasbacarinireis/DesafioAdaSemana1/tree/main/feedback-react-app) do diretório feedback-react-app.
+  
+     
+2. **Back End:**
+      - Siga as instruções..
+  
 
  ## 📫 Contribuindo para projeto
 
@@ -94,3 +98,4 @@ Para contribuir com o projeto, siga estas etapas:
 - Envie para o branch original: `git push origin <nome_do_projeto> / <local>`
 - Crie a solicitação de pull.
 
+## 
