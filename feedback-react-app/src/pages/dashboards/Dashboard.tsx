@@ -36,10 +36,9 @@ const Dashboard: FC = () => {
       }
       setCardList(types)
     };
-
-    
+  
     loadCardList();
-  }, []);
+  },);
 
 
 

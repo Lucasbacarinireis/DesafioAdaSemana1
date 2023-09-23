@@ -9,8 +9,6 @@ import Chart from "react-apexcharts";
 import api from 'service/Api';
 import toast from "react-hot-toast";
 
-
-
 const Analytics: FC = () => {
   const theme = useTheme();
 
@@ -19,14 +17,14 @@ const Analytics: FC = () => {
     categories: ["Sugestão", "Elogio", "Critica"],
   });
   
-  const types = [{type:'ELOGIO', title:'Elogio', total:0},
+  const typesList = [{type:'ELOGIO', title:'Elogio', total:0},
   {type:'SUGESTAO', title:'Sugestão',total:0},
    {type:'CRITICA',title:'Critica',total:0}]
   
   useEffect(() => {
     const loadCardList = async () => {
       let  totalGeral = 0
-        for (const type of types) {
+        for (const type of typesList) {
           try {
             let query = `/feedbacks/tamanho-fila/${type.type}`
             const response = await api.get(query);
@@ -36,25 +34,19 @@ const Analytics: FC = () => {
           }
       }
 
-      totalGeral =types.reduce((total, item) => total + item.total, 0);
-      console.log(totalGeral)
+      totalGeral =typesList.reduce((total, item) => total + item.total, 0);
 
-      const updatedSeries = data.categories.map((category, indice) => {
-        const objetoEncontrado = types.find(item => item.title === category);
+      const updatedSeries = data.categories.map((category) => {
+        const objetoEncontrado = typesList.find(item => item.title === category);
         return objetoEncontrado ? parseFloat(((objetoEncontrado.total / totalGeral) * 100).toFixed(2)) : 0;
       });
 
       setData({ ...data, series: updatedSeries });
-
-      console.log(data)
     };
-
     
     loadCardList();
 
-  }, []);
-
-
+  },);
 
   const chartOptions: ApexOptions = {
     chart: { background: "transparent" },

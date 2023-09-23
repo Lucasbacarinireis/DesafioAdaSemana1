@@ -154,8 +154,6 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     // @ts-ignore
     const { accessToken, user } = response.data;
     setSession(accessToken);
-    console.log(response.data);
-
     dispatch({
       type: Types.Register,
       payload: {

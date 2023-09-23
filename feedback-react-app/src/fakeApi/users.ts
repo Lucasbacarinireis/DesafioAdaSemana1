@@ -23,7 +23,6 @@ Mock.onPost("/api/auth/login").reply(async (config) => {
 
     const { email } = JSON.parse(config.data);
     const user = userList.find((user) => user.email === email);
-    console.log(user);
     if (!user) {
       return [400, { message: "Email ou senha invalida" }];
     }
