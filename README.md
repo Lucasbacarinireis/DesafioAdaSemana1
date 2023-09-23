@@ -103,9 +103,8 @@ Para contribuir com o projeto, siga estas etapas:
   #### 1. Home
   ![1. Home](<Imagens/1. home.png>)
 
-
   #### 2. Home - Perfil
-  ![2. Home](<Imagens/1. home.png>)
+  ![Al2. Home](<Imagens/1.2 perfil.png>)
 
   #### 3. Formulário de envio de feedbacks
   ![3.](<Imagens/1.1 form cadastro.png>)
