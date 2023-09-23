@@ -1,0 +1,30 @@
+version: '3'
+services:
+  backend:
+    build:
+      context: ./Desafio01
+      dockerfile: Dockerfile
+    environment:
+      - AWS_ACCESS_KEY_ID=AKIAUTD6MGMVTKLYT6LD
+      - AWS_SECRET_ACCESS_KEY=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
+      - AWS_REGION=us-east-1
+    ports:
+      - "8080:8080"
+    depends_on:
+      - mongodb
+
+  frontend:
+    build:
+      context: ./feedback-react-app
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+
+  mongodb:
+    image: mongo:latest
+    ports:
+      - "27017:27017"
+    environment:
+      - MONGODB_HOST=localhost
+      - MONGODB_PORT=27017
+      - MONGODB_DATABASE=test
