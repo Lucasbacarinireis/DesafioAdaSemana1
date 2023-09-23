@@ -26,6 +26,7 @@ import com.cielo.desafio01.enums.FeedbackStatus;
 import com.cielo.desafio01.model.CustomerFeedback;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:3000")
 public class FeedbackControllerPost {
 
     @Autowired

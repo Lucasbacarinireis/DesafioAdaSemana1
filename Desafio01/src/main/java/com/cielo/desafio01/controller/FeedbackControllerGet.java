@@ -26,6 +26,7 @@ import com.cielo.desafio01.model.CustomerFeedback;
 
 @Tag(name = "Feedback", description = "API de Gerenciamento de feedbacks")
 @RestController
+@CrossOrigin(origins = "http://localhost:3000")
 @RequestMapping("/feedbacks")
 public class FeedbackControllerGet {
 
