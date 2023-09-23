@@ -1,17 +1,60 @@
+import { FC, useEffect, useState } from "react";
+
 import { Box, Card, useTheme } from "@mui/material";
 import { ApexOptions } from "apexcharts";
 import FlexBox from "components/FlexBox";
 import { H5 } from "components/Typography";
-import { FC } from "react";
 import Chart from "react-apexcharts";
 
-const data = {
-  series: [75, 50, 25],
-  categories: ["Sugestão", "Elogio", "Critica"],
-};
+import api from 'service/Api';
+import toast from "react-hot-toast";
+
+
 
 const Analytics: FC = () => {
   const theme = useTheme();
+
+  const [data, setData] = useState({
+    series: [0, 0, 0],
+    categories: ["Sugestão", "Elogio", "Critica"],
+  });
+  
+  const types = [{type:'ELOGIO', title:'Elogio', total:0},
+  {type:'SUGESTAO', title:'Sugestão',total:0},
+   {type:'CRITICA',title:'Critica',total:0}]
+  
+  useEffect(() => {
+    const loadCardList = async () => {
+      let  totalGeral = 0
+        for (const type of types) {
+          try {
+            let query = `/feedbacks/tamanho-fila/${type.type}`
+            const response = await api.get(query);
+            type.total = Number(response.data);
+          } catch (error) {
+            toast.error(`${error}`);
+          }
+      }
+
+      totalGeral =types.reduce((total, item) => total + item.total, 0);
+      console.log(totalGeral)
+
+      const updatedSeries = data.categories.map((category, indice) => {
+        const objetoEncontrado = types.find(item => item.title === category);
+        return objetoEncontrado ? parseFloat(((objetoEncontrado.total / totalGeral) * 100).toFixed(2)) : 0;
+      });
+
+      setData({ ...data, series: updatedSeries });
+
+      console.log(data)
+    };
+
+    
+    loadCardList();
+
+  }, []);
+
+
 
   const chartOptions: ApexOptions = {
     chart: { background: "transparent" },

@@ -59,7 +59,7 @@ const Dashboard: FC = () => {
         </Grid>
 
         <Grid item lg={4} md={4} xs={12}>
-          <Analytics />
+          <Analytics/>
         </Grid>
       </Grid>
     </Box>
