@@ -43,22 +43,22 @@ public class FeedbackControllerPost {
 //            description = "Envia um feedback para a fila.",
     )
     @ApiResponses({
-            @ApiResponse(responseCode = "200", content = { @Content(schema = @Schema(implementation = CustomerFeedback.class), mediaType = "application/json") }),
-            @ApiResponse(responseCode = "404", content = { @Content(schema = @Schema()) }),
-            @ApiResponse(responseCode = "500", content = { @Content(schema = @Schema()) }) })
+    @ApiResponse(responseCode = "200", content = { @Content(schema = @Schema(implementation = CustomerFeedback.class), mediaType = "application/json") }),
+    @ApiResponse(responseCode = "404", content = { @Content(schema = @Schema()) }),
+    @ApiResponse(responseCode = "500", content = { @Content(schema = @Schema()) }) })
     @PostMapping("/enviar-feedback")
-    public ResponseEntity<String> enviarFeedback(@RequestBody CustomerFeedback feedback) {
+    public ResponseEntity<String> enviarFeedback(@RequestBody CustomerFeedback feedback) throws JsonProcessingException {
         FeedbackType tipoFeedback = feedback.getType();
         String topicoSNS = obterTopicoSNSPorTipo(tipoFeedback);
-
+            
         feedback.setStatus(FeedbackStatus.RECEBIDO);
-
+            
         String messageGroupId = obterMessageGroupId(feedback);
-
+            
         String mensagemJson = criarMensagemJson(feedback);
-
+            
         snsService.enviarMensagemParaTopico(topicoSNS, mensagemJson, messageGroupId);
-
+            
         return ResponseEntity.status(HttpStatus.CREATED).body("Feedback enviado com sucesso.");
     }
 
@@ -79,14 +79,9 @@ public class FeedbackControllerPost {
         }
     }
 
-    private String criarMensagemJson(CustomerFeedback feedback) {
+    private String criarMensagemJson(CustomerFeedback feedback) throws JsonProcessingException {
         ObjectMapper objectMapper = new ObjectMapper();
-        try {
-            String mensagemJson = objectMapper.writeValueAsString(feedback);
-            return mensagemJson;
-        } catch (JsonProcessingException e) {
-            e.printStackTrace();
-            throw new RuntimeException("Erro ao converter o objeto CustomerFeedback em JSON.");
-        }
-}
+        String mensagemJson = objectMapper.writeValueAsString(feedback.getMessage());
+        return mensagemJson;
+    }
 }

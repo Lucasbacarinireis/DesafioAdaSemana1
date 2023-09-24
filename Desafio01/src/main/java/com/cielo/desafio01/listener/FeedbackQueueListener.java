@@ -11,10 +11,18 @@ import com.cielo.desafio01.service.FeedbackService;
 
 import software.amazon.awssdk.services.guardduty.model.Feedback;
 import org.springframework.messaging.handler.annotation.Header;
+import org.springframework.beans.factory.annotation.Value;
 import com.amazonaws.services.sqs.model.DeleteMessageRequest;
 
 @Service
 public class FeedbackQueueListener {
+    @Value("${sqs.suggestion.queue.url}")
+    private String suggestionQueueUrl;
+    @Value("${sqs.compliment.queue.url}")
+    private String complimentQueueUrl;
+    @Value("${sqs.criticism.queue.url}")
+    private String criticismQueueUrl;
+
     private final FeedbackRepository feedbackRepository;
     private final AmazonSQS amazonSQS;
     private final FeedbackService feedbackService;
@@ -26,7 +34,7 @@ public class FeedbackQueueListener {
         this.feedbackService = feedbackService;
     }
 
-    @SqsListener("sqs-suggestion-queue.fifo")
+    @SqsListener("${sqs.suggestion.queue.url}")
     public void processarMensagemSugestao(String mensagem, @Header("MessageId") String messageId, @Header("ReceiptHandle") String receiptHandle) {
         com.cielo.desafio01.model.Feedback feedback = new com.cielo.desafio01.model.Feedback();
         feedback.setMessage(mensagem);
@@ -40,11 +48,11 @@ public class FeedbackQueueListener {
 
         if (sucesso) {
             feedbackService.atualizarStatusFeedback(messageId, FeedbackStatus.FINALIZADO);
-            amazonSQS.deleteMessage(new DeleteMessageRequest().withQueueUrl("sqs-suggestion-queue.fifo").withReceiptHandle(receiptHandle));
+            amazonSQS.deleteMessage(new DeleteMessageRequest().withQueueUrl(suggestionQueueUrl).withReceiptHandle(receiptHandle));
         }
     }
 
-    @SqsListener("sqs-compliment-queue.fifo")
+    @SqsListener("${sqs.compliment.queue.url}")
     public void processarMensagemElogio(String mensagem, @Header("MessageId") String messageId, @Header("ReceiptHandle") String receiptHandle) {
         com.cielo.desafio01.model.Feedback feedback = new com.cielo.desafio01.model.Feedback();
         feedback.setMessage(mensagem);
@@ -58,11 +66,11 @@ public class FeedbackQueueListener {
 
         if (sucesso) {
             feedbackService.atualizarStatusFeedback(messageId, FeedbackStatus.FINALIZADO);
-            amazonSQS.deleteMessage(new DeleteMessageRequest().withQueueUrl("sqs-compliment-queue.fifo").withReceiptHandle(receiptHandle));
+            amazonSQS.deleteMessage(new DeleteMessageRequest().withQueueUrl(complimentQueueUrl).withReceiptHandle(receiptHandle));
         }
     }
 
-    @SqsListener("sqs-criticism-queue.fifo")
+    @SqsListener("${sqs.criticism.queue.url}")
     public void processarMensagemCritica(String mensagem, @Header("MessageId") String messageId, @Header("ReceiptHandle") String receiptHandle) {
         com.cielo.desafio01.model.Feedback feedback = new com.cielo.desafio01.model.Feedback();
         feedback.setMessage(mensagem);
@@ -76,7 +84,7 @@ public class FeedbackQueueListener {
 
         if (sucesso) {
             feedbackService.atualizarStatusFeedback(messageId, FeedbackStatus.FINALIZADO);
-            amazonSQS.deleteMessage(new DeleteMessageRequest().withQueueUrl("sqs-criticism-queue.fifo").withReceiptHandle(receiptHandle));
+            amazonSQS.deleteMessage(new DeleteMessageRequest().withQueueUrl(criticismQueueUrl).withReceiptHandle(receiptHandle));
         }
     }
 }
