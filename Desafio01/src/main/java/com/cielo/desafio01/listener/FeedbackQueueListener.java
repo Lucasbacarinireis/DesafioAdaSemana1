@@ -38,7 +38,7 @@ public class FeedbackQueueListener {
     public void processarMensagemSugestao(String mensagem, @Header("MessageId") String messageId, @Header("ReceiptHandle") String receiptHandle) {
         com.cielo.desafio01.model.Feedback feedback = new com.cielo.desafio01.model.Feedback();
         feedback.setMessage(mensagem);
-        feedback.setStatus("Finalizado");
+        feedback.setStatus(FeedbackStatus.FINALIZADO);
 
         feedbackRepository.save(feedback);
 
@@ -56,7 +56,7 @@ public class FeedbackQueueListener {
     public void processarMensagemElogio(String mensagem, @Header("MessageId") String messageId, @Header("ReceiptHandle") String receiptHandle) {
         com.cielo.desafio01.model.Feedback feedback = new com.cielo.desafio01.model.Feedback();
         feedback.setMessage(mensagem);
-        feedback.setStatus("Finalizado");
+        feedback.setStatus(FeedbackStatus.FINALIZADO);
 
         feedbackRepository.save(feedback);
 
@@ -74,7 +74,7 @@ public class FeedbackQueueListener {
     public void processarMensagemCritica(String mensagem, @Header("MessageId") String messageId, @Header("ReceiptHandle") String receiptHandle) {
         com.cielo.desafio01.model.Feedback feedback = new com.cielo.desafio01.model.Feedback();
         feedback.setMessage(mensagem);
-        feedback.setStatus("Finalizado");
+        feedback.setStatus(FeedbackStatus.FINALIZADO);
 
         feedbackRepository.save(feedback);
 

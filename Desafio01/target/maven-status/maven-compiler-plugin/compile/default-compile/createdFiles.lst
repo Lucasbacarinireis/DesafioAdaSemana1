@@ -10,6 +10,7 @@ com\cielo\desafio01\util\EnvironmentVariable.class
 com\cielo\desafio01\config\AwsSQSConfig.class
 com\cielo\desafio01\config\OpenAPIConfig.class
 com\cielo\desafio01\controller\FeedbackControllerPost$1.class
+com\cielo\desafio01\FeedbackTestInitializer.class
 com\cielo\desafio01\service\FeedbackNotFoundException.class
 com\cielo\desafio01\service\FeedbackService.class
 com\cielo\desafio01\controller\FeedbackControllerGet$1.class
