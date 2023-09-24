@@ -11,6 +11,7 @@ C:\Users\ander\OneDrive\Desktop\Cielo Desafio 01\DesafioAdaSemana1\Desafio01\src
 C:\Users\ander\OneDrive\Desktop\Cielo Desafio 01\DesafioAdaSemana1\Desafio01\src\main\java\com\cielo\desafio01\config\AwsSQSConfig.java
 C:\Users\ander\OneDrive\Desktop\Cielo Desafio 01\DesafioAdaSemana1\Desafio01\src\main\java\com\cielo\desafio01\controller\FeedbackControllerGet.java
 C:\Users\ander\OneDrive\Desktop\Cielo Desafio 01\DesafioAdaSemana1\Desafio01\src\main\java\com\cielo\desafio01\listener\FeedbackQueueListener.java
+C:\Users\ander\OneDrive\Desktop\Cielo Desafio 01\DesafioAdaSemana1\Desafio01\src\main\java\com\cielo\desafio01\service\QueuePollingService.java
 C:\Users\ander\OneDrive\Desktop\Cielo Desafio 01\DesafioAdaSemana1\Desafio01\src\main\java\com\cielo\desafio01\util\EnvironmentVariable.java
 C:\Users\ander\OneDrive\Desktop\Cielo Desafio 01\DesafioAdaSemana1\Desafio01\src\main\java\com\cielo\desafio01\config\OpenAPIConfig.java
 C:\Users\ander\OneDrive\Desktop\Cielo Desafio 01\DesafioAdaSemana1\Desafio01\src\main\java\com\cielo\desafio01\service\FeedbackService.java

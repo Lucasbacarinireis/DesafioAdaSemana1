@@ -1,5 +1,6 @@
 com\cielo\desafio01\repository\FeedbackRepository.class
 com\cielo\desafio01\service\SNSService.class
+com\cielo\desafio01\service\QueuePollingService.class
 com\cielo\desafio01\controller\FeedbackControllerPost.class
 com\cielo\desafio01\controller\FeedbackControllerGet.class
 com\cielo\desafio01\listener\FeedbackQueueListener.class

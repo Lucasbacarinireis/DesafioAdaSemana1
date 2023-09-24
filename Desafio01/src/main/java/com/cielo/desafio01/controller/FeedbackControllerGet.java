@@ -1,9 +1,5 @@
 package com.cielo.desafio01.controller;
 
-import com.amazonaws.AmazonServiceException;
-import com.amazonaws.services.sqs.AmazonSQS;
-import com.amazonaws.services.sqs.model.*;
-
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -15,14 +11,16 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import software.amazon.awssdk.services.sqs.SqsClient;
+import software.amazon.awssdk.services.sqs.model.*;
+import com.cielo.desafio01.enums.FeedbackStatus;
+import com.cielo.desafio01.enums.FeedbackType;
+import com.cielo.desafio01.model.CustomerFeedback;
+import com.cielo.desafio01.service.QueuePollingService;
 
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
-
-import com.cielo.desafio01.enums.FeedbackType;
-import com.cielo.desafio01.enums.FeedbackStatus;
-import com.cielo.desafio01.model.CustomerFeedback;
 
 @Tag(name = "Feedback", description = "API de Gerenciamento de feedbacks")
 @RestController
@@ -30,7 +28,7 @@ import com.cielo.desafio01.model.CustomerFeedback;
 @RequestMapping("/feedbacks")
 public class FeedbackControllerGet {
 
-    private AmazonSQS amazonSQS;
+    private final SqsClient sqsClient;
     private final String sqsSuggestionQueueUrl;
     private final String sqsComplimentQueueUrl;
     private final String sqsCriticismQueueUrl;
@@ -38,12 +36,12 @@ public class FeedbackControllerGet {
 
     @Autowired
     public FeedbackControllerGet(
-            AmazonSQS amazonSQS,
+            SqsClient sqsClient,
             @Value("${sqs.suggestion.queue.url}") String sqsSuggestionQueueUrl,
             @Value("${sqs.compliment.queue.url}") String sqsComplimentQueueUrl,
             @Value("${sqs.criticism.queue.url}") String sqsCriticismQueueUrl
     ) {
-        this.amazonSQS = amazonSQS;
+        this.sqsClient = sqsClient;
         this.sqsSuggestionQueueUrl = sqsSuggestionQueueUrl;
         this.sqsComplimentQueueUrl = sqsComplimentQueueUrl;
         this.sqsCriticismQueueUrl = sqsCriticismQueueUrl;
@@ -94,48 +92,51 @@ public class FeedbackControllerGet {
     }
 
     private int consultarTamanhoFilaSQS(String filaSQS) {
-        GetQueueAttributesRequest request = new GetQueueAttributesRequest()
-                .withQueueUrl(filaSQS)
-                .withAttributeNames(QueueAttributeName.ApproximateNumberOfMessages);
-
-        GetQueueAttributesResult response = amazonSQS.getQueueAttributes(request);
-        Map<String, String> attributes = response.getAttributes();
-
-        String tamanhoAproximado = attributes.get(QueueAttributeName.ApproximateNumberOfMessages.toString());
-
+        GetQueueAttributesRequest request = GetQueueAttributesRequest.builder()
+            .queueUrl(filaSQS)
+            .attributeNames(QueueAttributeName.APPROXIMATE_NUMBER_OF_MESSAGES)
+            .build();
+    
+        GetQueueAttributesResponse response = sqsClient.getQueueAttributes(request);
+        Map<QueueAttributeName, String> attributes = response.attributes();
+    
+        String tamanhoAproximado = attributes.get(QueueAttributeName.APPROXIMATE_NUMBER_OF_MESSAGES);
+    
         return Integer.parseInt(tamanhoAproximado);
     }
 
     private List<CustomerFeedback> consultarFeedbacksNoSQS(FeedbackType tipo) {
         String filaSQS = obterFilaSQSPorTipo(tipo);
-
-        ReceiveMessageRequest request = new ReceiveMessageRequest()
-                .withQueueUrl(filaSQS)
-                .withMaxNumberOfMessages(10);
-
-        ReceiveMessageResult response = amazonSQS.receiveMessage(request);
-
-        List<Message> messages = response.getMessages();
-
+    
+        ReceiveMessageRequest request = ReceiveMessageRequest.builder()
+                .queueUrl(filaSQS)
+                .maxNumberOfMessages(10)
+                .build();
+    
+        ReceiveMessageResponse response = sqsClient.receiveMessage(request);
+    
+        List<Message> messages = response.messages();
+    
         List<CustomerFeedback> feedbacks = messages.stream()
                 .map(this::converterMensagemParaFeedback)
                 .collect(Collectors.toList());
-
+    
         return feedbacks;
     }
 
     private CustomerFeedback converterMensagemParaFeedback(Message message) {
         CustomerFeedback feedback = new CustomerFeedback();
-        feedback.setId(message.getMessageId());
+        feedback.setId(message.messageId());
         feedback.setStatus(FeedbackStatus.RECEBIDO);
-        feedback.setMessage(message.getBody());
+        feedback.setMessage(message.body());
 
-        MessageAttributeValue typeAttribute = message.getMessageAttributes().get("Type");
+        Map<String, MessageAttributeValue> messageAttributes = message.messageAttributes();
+        MessageAttributeValue typeAttribute = messageAttributes.get("Type");
 
         if (typeAttribute != null) {
-            feedback.setType(FeedbackType.valueOf(typeAttribute.getStringValue()));
+            feedback.setType(FeedbackType.valueOf(typeAttribute.stringValue()));
         } else {
-            String mensagem = message.getBody().toUpperCase();
+            String mensagem = message.body().toUpperCase();
 
             if (mensagem.contains("CRITICA")) {
                 feedback.setType(FeedbackType.CRITICA);

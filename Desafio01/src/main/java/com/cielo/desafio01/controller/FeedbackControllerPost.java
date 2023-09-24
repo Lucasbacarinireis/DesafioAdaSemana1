@@ -22,7 +22,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import org.springframework.web.bind.annotation.CrossOrigin;
 
 import com.cielo.desafio01.enums.FeedbackType;
-import com.cielo.desafio01.listener.FeedbackQueueListener;
+//import com.cielo.desafio01.listener.FeedbackQueueListener;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
