@@ -12,18 +12,15 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-import com.amazonaws.AmazonServiceException;
-import com.amazonaws.services.sns.model.PublishRequest;
-import com.amazonaws.services.sns.model.PublishResult;
 import com.cielo.desafio01.enums.FeedbackStatus;
 import com.cielo.desafio01.model.CustomerFeedback;
 import com.cielo.desafio01.service.SNSService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.core.JsonProcessingException;
 
+import org.springframework.web.bind.annotation.CrossOrigin;
+
 import com.cielo.desafio01.enums.FeedbackType;
-import com.cielo.desafio01.enums.FeedbackStatus;
-import com.cielo.desafio01.model.CustomerFeedback;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:3000")

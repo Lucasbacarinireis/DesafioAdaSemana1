@@ -1,43 +1,51 @@
 package com.cielo.desafio01.service;
 
-import com.cielo.desafio01.enums.FeedbackStatus;
 import com.cielo.desafio01.model.CustomerFeedback;
-import org.springframework.stereotype.Service;
+import com.cielo.desafio01.enums.FeedbackStatus;
+import com.cielo.desafio01.enums.FeedbackType;
+import com.cielo.desafio01.service.FeedbackNotFoundException;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import com.cielo.desafio01.enums.FeedbackType;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.stereotype.Service;
+
+import org.springframework.data.mongodb.core.query.Query;
 
 @Service
 public class FeedbackService {
 
-    private final List<CustomerFeedback> feedbacks = new ArrayList<>();
+    private final MongoTemplate mongoTemplate;
 
-    public void adicionarFeedback(CustomerFeedback feedback) {
-        feedbacks.add(feedback);
+    @Autowired
+    public FeedbackService(MongoTemplate mongoTemplate) {
+        this.mongoTemplate = mongoTemplate;
     }
 
+    public void adicionarFeedback(CustomerFeedback feedback) {
+        mongoTemplate.save(feedback);
+    }
+
+    
     public void atualizarStatusFeedback(String feedbackId, FeedbackStatus novoStatus) {
-        for (CustomerFeedback feedback : feedbacks) {
-            if (feedback.getId().equals(feedbackId)) {
-                feedback.setStatus(novoStatus);
-                break;
-            }
+        CustomerFeedback existingFeedback = mongoTemplate.findById(feedbackId, CustomerFeedback.class);
+        if (existingFeedback != null) {
+            existingFeedback.setStatus(novoStatus);
+            mongoTemplate.save(existingFeedback);
+        } else {
+            throw new FeedbackNotFoundException("Feedback não encontrado com ID: " + feedbackId);
         }
     }
 
     public List<CustomerFeedback> listarTodosFeedbacks() {
-        return feedbacks;
+        return mongoTemplate.findAll(CustomerFeedback.class);
     }
 
     public List<CustomerFeedback> listarFeedbacksPorTipo(FeedbackType tipo) {
-        List<CustomerFeedback> feedbacksPorTipo = new ArrayList<>();
-        for (CustomerFeedback feedback : feedbacks) {
-            if (feedback.getType() == tipo) {
-                feedbacksPorTipo.add(feedback);
-            }
-        }
-        return feedbacksPorTipo;
+        Query query = new Query(Criteria.where("type").is(tipo));
+        return mongoTemplate.find(query, CustomerFeedback.class);
     }
 }
