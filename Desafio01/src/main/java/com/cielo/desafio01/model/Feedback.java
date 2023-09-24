@@ -4,6 +4,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import com.cielo.desafio01.enums.FeedbackStatus;
+import com.cielo.desafio01.enums.FeedbackType;
 
 @Document(collection = "feedbacks")
 public class Feedback {
@@ -11,20 +12,22 @@ public class Feedback {
     private String id;
     private String message;
     private FeedbackStatus status;
+    private FeedbackType type;
 
-    // Construtor padrão (vazio)
     public Feedback() {
     }
 
-    // Construtor com todos os campos (se necessário)
     public Feedback(String message, FeedbackStatus status) {
         this.message = message;
         this.status = status;
     }
 
-    // Getters e Setters
     public String getId() {
         return id;
+    }
+
+    public void setType(FeedbackType type) {
+        this.type = type;
     }
 
     public void setId(String id) {

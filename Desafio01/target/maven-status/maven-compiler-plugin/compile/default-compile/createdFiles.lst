@@ -1,7 +1,6 @@
 com\cielo\desafio01\repository\FeedbackRepository.class
 com\cielo\desafio01\service\SNSService.class
 com\cielo\desafio01\controller\FeedbackControllerPost.class
-com\cielo\desafio01\service\FeedbackQueueConsumer.class
 com\cielo\desafio01\controller\FeedbackControllerGet.class
 com\cielo\desafio01\listener\FeedbackQueueListener.class
 com\cielo\desafio01\enums\FeedbackType.class
