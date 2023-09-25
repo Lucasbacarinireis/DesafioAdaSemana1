@@ -99,6 +99,10 @@ Antes de começar, verifique se você atendeu aos seguintes requisitos:
    - O Okteto é uma plataforma de desenvolvimento de aplicativos baseada em contêineres que foi projetada para simplificar e acelerar o desenvolvimento de aplicativos na nuvem. Foram publicados via docker-compose, com banco de dados. Segue os links que, obviamente, é necessário complementar com a rota que se pretende acessar.
    - [Backend](https://backend-ada-cielo-andersonaoliveira.cloud.okteto.net)
    - [Frontend](https://frontend-ada-cielo-andersonaoliveira.cloud.okteto.net/) 
+
+   Segue, collection do Postman para fork com os endpoints e api no Okteto. 
+
+   [![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/21244485-de701520-7930-4809-9501-3d80494da677?action=collection%2Ffork&source=rip_markdown&collection-url=entityId%3D21244485-de701520-7930-4809-9501-3d80494da677%26entityType%3Dcollection%26workspaceId%3D8d1767b8-2f54-43e1-99ac-a52c5f04e2a3)
    
 
  ## 📫 Contribuindo para projeto
