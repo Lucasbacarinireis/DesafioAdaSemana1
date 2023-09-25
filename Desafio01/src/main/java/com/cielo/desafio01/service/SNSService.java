@@ -4,7 +4,6 @@ import org.springframework.stereotype.Service;
 import com.amazonaws.services.sns.AmazonSNS;
 import com.amazonaws.services.sns.AmazonSNSClientBuilder;
 import com.amazonaws.services.sns.model.PublishRequest;
-import com.amazonaws.services.sns.model.PublishResult;
 
 
 @Service
@@ -22,7 +21,7 @@ public class SNSService {
                 .withMessageGroupId(messageGroupId)
                 .withMessageDeduplicationId("mensagem-unica");
         try {
-            PublishResult result = snsClient.publish(request);
+            snsClient.publish(request);
         } catch (Exception e) {
             e.printStackTrace();
             throw new RuntimeException("Erro ao enviar a mensagem para o tópico SNS.");

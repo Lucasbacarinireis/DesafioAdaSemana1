@@ -7,10 +7,7 @@ import org.springframework.stereotype.Service;
 import software.amazon.awssdk.services.sqs.SqsClient;
 import software.amazon.awssdk.services.sqs.model.*;
 import com.cielo.desafio01.enums.FeedbackStatus;
-import com.cielo.desafio01.listener.FeedbackQueueListener;
-import com.cielo.desafio01.model.Feedback;
 import com.cielo.desafio01.repository.FeedbackRepository;
-import com.cielo.desafio01.service.FeedbackService;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

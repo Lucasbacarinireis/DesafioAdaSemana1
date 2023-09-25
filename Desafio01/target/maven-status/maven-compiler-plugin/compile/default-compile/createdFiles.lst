@@ -6,7 +6,6 @@ com\cielo\desafio01\controller\FeedbackControllerGet.class
 com\cielo\desafio01\listener\FeedbackQueueListener.class
 com\cielo\desafio01\enums\FeedbackType.class
 com\cielo\desafio01\config\AwsSNSConfig.class
-com\cielo\desafio01\util\EnvironmentVariable.class
 com\cielo\desafio01\config\AwsSQSConfig.class
 com\cielo\desafio01\config\OpenAPIConfig.class
 com\cielo\desafio01\controller\FeedbackControllerPost$1.class

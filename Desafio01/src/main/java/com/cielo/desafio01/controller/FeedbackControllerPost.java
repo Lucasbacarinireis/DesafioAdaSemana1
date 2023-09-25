@@ -25,9 +25,6 @@ import com.cielo.desafio01.enums.FeedbackType;
 //import com.cielo.desafio01.listener.FeedbackQueueListener;
 
 import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 import com.cielo.desafio01.model.Feedback;
 import com.cielo.desafio01.repository.FeedbackRepository;

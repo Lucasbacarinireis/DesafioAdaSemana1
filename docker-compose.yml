@@ -29,4 +29,4 @@ services:
       - MONGODB_PORT=27017
       - MONGODB_DATABASE=test
     volumes:
-      - ./mongodb_data:/data/db
+      - ./data/db:/data/db

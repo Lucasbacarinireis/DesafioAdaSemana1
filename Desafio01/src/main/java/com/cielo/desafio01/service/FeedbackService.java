@@ -3,9 +3,6 @@ package com.cielo.desafio01.service;
 import com.cielo.desafio01.model.CustomerFeedback;
 import com.cielo.desafio01.enums.FeedbackStatus;
 import com.cielo.desafio01.enums.FeedbackType;
-import com.cielo.desafio01.service.FeedbackNotFoundException;
-
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;

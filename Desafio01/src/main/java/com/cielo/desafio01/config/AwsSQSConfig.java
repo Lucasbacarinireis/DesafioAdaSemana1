@@ -2,7 +2,6 @@ package com.cielo.desafio01.config;
 
 import software.amazon.awssdk.regions.Region;
 import software.amazon.awssdk.auth.credentials.AwsBasicCredentials;
-import software.amazon.awssdk.auth.credentials.DefaultCredentialsProvider;
 import software.amazon.awssdk.auth.credentials.StaticCredentialsProvider;
 import software.amazon.awssdk.services.sqs.SqsClient;
 import org.springframework.beans.factory.annotation.Value;

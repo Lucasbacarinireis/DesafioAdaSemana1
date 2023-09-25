@@ -75,8 +75,11 @@ Antes de começar, verifique se você atendeu aos seguintes requisitos:
 
 - [Spring Boot](https://spring.io/)
 - [Maven](https://maven.apache.org/): Necessário para realizar o build do projeto Java
-- [Swagger](https://editor.swagger.io/):
-- [react + Material ui](https://react.dev/) 
+- [Swagger](https://editor.swagger.io/)
+- [react + Material ui](https://react.dev/)
+- [MongoDB](https://www.mongodb.com/pt-br)
+- [Docker](https://www.docker.com/)
+- [Okteto](https://cloud.okteto.com/)
 
 ## 🚀 Getting started 
 
@@ -85,8 +88,14 @@ Antes de começar, verifique se você atendeu aos seguintes requisitos:
   
      
 2. **Back End:**
-      - Siga as instruções..
-  
+   - Siga as instruções contidas no [Backend.md](https://github.com/Lucasbacarinireis/DesafioAdaSemana1/Desafio01/Backend.md) do diretório da aplicação Maven.
+
+3. **Banco de Dados:**
+   - Siga as instruções contidas no [Mongodb.md](https://github.com/Lucasbacarinireis/DesafioAdaSemana1/Mongodb.md) do diretório da aplicação Maven.  
+
+4. **Docker:**
+   - Siga as instruções contidas no [Docker.md](https://github.com/Lucasbacarinireis/DesafioAdaSemana1/Docker.md) na raiz deste repositório.
+   
 
  ## 📫 Contribuindo para projeto
 

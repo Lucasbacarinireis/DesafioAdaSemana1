@@ -8,7 +8,6 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import software.amazon.awssdk.services.sqs.SqsClient;
@@ -16,7 +15,6 @@ import software.amazon.awssdk.services.sqs.model.*;
 import com.cielo.desafio01.enums.FeedbackStatus;
 import com.cielo.desafio01.enums.FeedbackType;
 import com.cielo.desafio01.model.CustomerFeedback;
-import com.cielo.desafio01.service.QueuePollingService;
 
 import java.util.List;
 import java.util.Map;
