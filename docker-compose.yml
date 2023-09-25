@@ -18,7 +18,7 @@ services:
       context: ./feedback-react-app
       dockerfile: Dockerfile
     ports:
-      - "3000:3000"
+      - "80:80"
 
   mongodb:
     image: mongo:latest
