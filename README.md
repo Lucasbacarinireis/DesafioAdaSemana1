@@ -88,13 +88,13 @@ Antes de começar, verifique se você atendeu aos seguintes requisitos:
   
      
 2. **Back End:**
-   - Siga as instruções contidas no [Backend.md](https://github.com/Lucasbacarinireis/DesafioAdaSemana1/Desafio01/Backend.md) do diretório da aplicação Maven.
+   - Siga as instruções contidas no [Backend.md](https://github.com/Lucasbacarinireis/DesafioAdaSemana1/blob/main/Desafio01/Backend.md) do diretório da aplicação Maven.
 
 3. **Banco de Dados:**
-   - Siga as instruções contidas no [Mongodb.md](https://github.com/Lucasbacarinireis/DesafioAdaSemana1/Mongodb.md) do diretório da aplicação Maven.  
+   - Siga as instruções contidas no [Mongodb.md](https://github.com/Lucasbacarinireis/DesafioAdaSemana1/blob/main/Desafio01/Mongodb.md) do diretório da aplicação Maven.  
 
 4. **Docker:**
-   - Siga as instruções contidas no [Docker.md](https://github.com/Lucasbacarinireis/DesafioAdaSemana1/Docker.md) na raiz deste repositório.
+   - Siga as instruções contidas no [Docker.md](https://github.com/Lucasbacarinireis/DesafioAdaSemana1/blob/main/Docker.md) na raiz deste repositório.
    
 
  ## 📫 Contribuindo para projeto
