@@ -85,8 +85,7 @@ Antes de começar, verifique se você atendeu aos seguintes requisitos:
 
 1. **Front End:**
    - Siga as instruções contidas no [README.md](https://github.com/Lucasbacarinireis/DesafioAdaSemana1/tree/main/feedback-react-app) do diretório feedback-react-app.
-  
-     
+       
 2. **Back End:**
    - Siga as instruções contidas no [Backend.md](https://github.com/Lucasbacarinireis/DesafioAdaSemana1/blob/main/Desafio01/Backend.md) do diretório da aplicação Maven.
 
@@ -95,6 +94,11 @@ Antes de começar, verifique se você atendeu aos seguintes requisitos:
 
 4. **Docker:**
    - Siga as instruções contidas no [Docker.md](https://github.com/Lucasbacarinireis/DesafioAdaSemana1/blob/main/Docker.md) na raiz deste repositório.
+
+5. **Okteto:**
+   - O Okteto é uma plataforma de desenvolvimento de aplicativos baseada em contêineres que foi projetada para simplificar e acelerar o desenvolvimento de aplicativos na nuvem. Foram publicados via docker-compose, com banco de dados. Segue os links que, obviamente, é necessário complementar com a rota que se pretende acessar.
+   - [Backend](https://backend-ada-cielo-andersonaoliveira.cloud.okteto.net)
+   - [Frontend](https://frontend-ada-cielo-andersonaoliveira.cloud.okteto.net/) 
    
 
  ## 📫 Contribuindo para projeto
